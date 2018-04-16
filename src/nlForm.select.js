@@ -13,11 +13,17 @@ angular.module('vr.directives.nlForm.select',[])
 					"<a class='nl-field-toggle' ng-click='open($event)' ng-bind='getSelected()'></a>" +
 					"<ul>" +
                         "<li ng-show='allOptions && multiple && !isAllSelected()' ng-bind='allOptions' ng-click='selectAll()'></li>" +
-						"<li ng-repeat='label in getLabels()' ng-class=\"{'nl-dd-checked': isSelected(label)}\" ng-click='select(label)' ng-bind='label'></li>" +
+						"<li ng-repeat='label in getLabels()' ng-class=\"{'nl-dd-checked': isSelected(label)}\" ng-click='select(label)'>" +
+						"<img ng-src='{ label }' ng-if='image' />" +
+						"<span ng-if='!image'>{ label }</span>" +
+						"</li>" +
                         "<li ng-show='multiple && !isNoneSelected()' ng-bind='none' ng-click='selectNone()'></li> " +
 					"</ul>" +
 				"</div>",
 			link: function(scope, element, attributes){
+
+				// use label as file url to show image in selection
+				scope.image = !angular.isUndefined(attributes.image);
 
 				// is this required
 				scope.required = !angular.isUndefined(attributes.required);
@@ -228,7 +234,7 @@ angular.module('vr.directives.nlForm.select',[])
 
 			return label;
         }
-		
+
         // check to make sure all the values are in the list of options
 		function checkValue() {
 			if($scope.multiple) {
