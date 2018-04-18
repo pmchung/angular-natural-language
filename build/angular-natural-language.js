@@ -22,13 +22,19 @@ angular.module('vr.directives.nlForm.select',[])
 					"<ul>" +
                         "<li ng-show='allOptions && multiple && !isAllSelected()' ng-bind='allOptions' ng-click='selectAll()'></li>" +
 						"<li ng-repeat='label in getLabels()' ng-class=\"{'nl-dd-checked': isSelected(label)}\" ng-click='select(label)'>" +
-						"<img ng-src='{ label }' ng-if='image' />" +
-						"<span ng-if='!image'>{ label }</span>" +
+							"<img ng-src='{ label }' ng-if='image' />" +
+							"<span ng-if='!image'>{ label }</span>" +
 						"</li>" +
-                        "<li ng-show='multiple && !isNoneSelected()' ng-bind='none' ng-click='selectNone()'></li> " +
+						"<li class='nl-field-other' ng-show='allowOther && !multiple'>" +
+							"<input ng-bind='_otherValue_' ng-class=\"{'nl-dd-checked': isSelected('_other_')} />" +
+						"</li>" +
+						"<li ng-show='multiple && !isNoneSelected()' ng-bind='none' ng-click='selectNone()'></li> " +
 					"</ul>" +
 				"</div>",
 			link: function(scope, element, attributes){
+
+				// allow text input as "other"
+				scope.allowOther = !angular.isUndefined(attributes.allowOther);
 
 				// use label as file url to show image in selection
 				scope.image = !angular.isUndefined(attributes.image);
