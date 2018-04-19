@@ -18,7 +18,7 @@ angular.module('vr.directives.nlForm.select',[])
             controller: 'nlSelectCtrl',
 			template:
 				"<span ng-form='nlSelect' class='nl-field nl-dd' ng-class=\"{'nl-field-open': opened}\">" +
-					"<a class='nl-field-toggle' ng-click='open($event)' ng-bind='getSelected()'></a>" +
+					"<a class='nl-field-toggle' ng-class='{ \"nl-valid\": none !== value }' ng-click='open($event)' ng-bind='getSelected()'></a>" +
 					"<ul>" +
                         "<li ng-show='allOptions && multiple && !isAllSelected()' ng-bind='allOptions' ng-click='selectAll()'></li>" +
 						"<li ng-repeat='label in getLabels()' ng-class=\"{'nl-dd-checked': isSelected(label)}\" ng-click='select(label)'>" +
@@ -37,8 +37,6 @@ angular.module('vr.directives.nlForm.select',[])
 
 				// use label as file url to show image in selection
 				scope.image = !angular.isUndefined(attributes.image);
-
-				console.log(scope.image)
 
 				// is this required
 				scope.required = !angular.isUndefined(attributes.required);
@@ -492,7 +490,7 @@ angular.module('vr.directives.nlForm.text',[])
 			},
             template:
                 '<span ng-form class="nl-field nl-ti-text" ng-class="{\'nl-field-open\': opened}">' +
-                    '<a class="nl-field-toggle" ng-click="open($event)" ng-bind="viewValue()"></a>' +
+				'<a class="nl-field-toggle"  ng-class="{\'nl-valid\': value }" ng-click="open($event)" ng-bind="viewValue()"></a>' +
                     '<ul>' +
                         '<li class="nl-ti-input">' +
                             '<input type="text" placeholder="{{ placeholder }}" name="{{ name }}" ng-model="value" ng-click="$event.stopPropagation()" ng-required="required"/>' +
