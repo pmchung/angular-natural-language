@@ -18,7 +18,7 @@ angular.module('vr.directives.nlForm.select',[])
             controller: 'nlSelectCtrl',
 			template:
 				"<span ng-form='nlSelect' class='nl-field nl-dd' ng-class=\"{'nl-field-open': opened}\">" +
-					"<a class='nl-field-toggle' ng-class='{ \"nl-valid\": none !== value }' ng-click='open($event)'>" +
+					"<a class='nl-field-toggle' ng-class='{ \"nl-valid\": value && value.length > 0  }' ng-click='open($event)'>" +
 					"{{ !value ? none : getSelected() }} " +
 					"</a>" +
 					"<ul>" +
