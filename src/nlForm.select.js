@@ -9,20 +9,19 @@ angular.module('vr.directives.nlForm.select',[])
 			},
             controller: 'nlSelectCtrl',
 			template:
-				"<div ng-form='nlSelect' class='nl-field nl-dd' ng-class=\"{'nl-field-open': opened}\">" +
+				"<span ng-form='nlSelect' class='nl-field nl-dd' ng-class=\"{'nl-field-open': opened}\">" +
 					"<a class='nl-field-toggle' ng-click='open($event)' ng-bind='getSelected()'></a>" +
 					"<ul>" +
                         "<li ng-show='allOptions && multiple && !isAllSelected()' ng-bind='allOptions' ng-click='selectAll()'></li>" +
 						"<li ng-repeat='label in getLabels()' ng-class=\"{'nl-dd-checked': isSelected(label)}\" ng-click='select(label)'>" +
-							"<img ng-if='image' ng-src='{ label }' />" +
+							"<img ng-show='image' ng-src='label' />" +
 							"<span ng-if='!image' ng-bind='label' />" +
 						"</li>" +
-						"<li class='nl-field-other' ng-show='allowOther && !multiple'>" +
-							"<input ng-bind='_otherValue_' ng-class=\"{'nl-dd-checked': isSelected('_other_')} />" +
+						"<li ng-show='allowOther'>" +
+							"<input type='text' placeholder='Specify other' ng-model='otherValue' ng-change='selectOther(otherValue)' />" +
 						"</li>" +
-						"<li ng-show='multiple && !isNoneSelected()' ng-bind='none' ng-click='selectNone()'></li> " +
 					"</ul>" +
-				"</div>",
+				"</span>",
 			link: function(scope, element, attributes){
 
 				// allow text input as "other"
@@ -30,6 +29,8 @@ angular.module('vr.directives.nlForm.select',[])
 
 				// use label as file url to show image in selection
 				scope.image = !angular.isUndefined(attributes.image);
+
+				console.log(scope.image)
 
 				// is this required
 				scope.required = !angular.isUndefined(attributes.required);
@@ -199,7 +200,8 @@ angular.module('vr.directives.nlForm.select',[])
 					break;
 				case OBJECT_OF_OBJECTS:
 					// simple index retrieval
-					value = $scope.options[label].value;
+					if (!$scope.selectedOther)
+						value = $scope.options[label].value;
 					break;
 			}
 
@@ -253,7 +255,7 @@ angular.module('vr.directives.nlForm.select',[])
 				$scope.value = values;
 			} else {
 				if(!isOption($scope.value)) {
-					$scope.value = getOption(0).value;
+					$scope.value = $scope.none
 				}
 			}
         }
@@ -272,7 +274,10 @@ angular.module('vr.directives.nlForm.select',[])
 		// select an option
 		$scope.select = function(option) {
 			$scope.setValue(option);
-			$scope.close();
+			$scope.selectedOther = false;
+			$scope.otherValue = '';
+			if (!$scope.multiple)
+				$scope.close();
 		};
 
         /**
@@ -286,18 +291,28 @@ angular.module('vr.directives.nlForm.select',[])
                 }
                 $scope.close();
             });
-        };
+		};
+
+		/**
+		 * select other
+		 */
+		 $scope.selectOther = function(value){
+			 $scope.selectedOther = value.length > 0;
+			 $scope.value = $scope.otherValue;
+			 $scope.selectNone(true)
+		 }
 
         /**
          * unselect all options
          */
-        $scope.selectNone = function(){
+        $scope.selectNone = function(noClose){
             angular.forEach($scope.options, function(option){
 				var label = getLabelFromOption(option);
                 if($scope.isSelected(label)){
                     $scope.select(label);
-                }
-                $scope.close();
+				}
+				if (!noClose)
+					$scope.close();
             });
         };
 
@@ -320,7 +335,7 @@ angular.module('vr.directives.nlForm.select',[])
 		// set the value, or add it to the list if this is a multi-select
 		$scope.setValue = function(option) {
 			var value = getValue(option);
-			if($scope.multiple) {
+			if ($scope.multiple) {
 				var index = $scope.value.indexOf(value);
 				if(index == -1) {
 					$scope.value.push(value);

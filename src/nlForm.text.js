@@ -10,7 +10,7 @@ angular.module('vr.directives.nlForm.text',[])
 				value: '='
 			},
             template:
-                '<div ng-form class="nl-field nl-ti-text" ng-class="{\'nl-field-open\': opened}">' +
+                '<span ng-form class="nl-field nl-ti-text" ng-class="{\'nl-field-open\': opened}">' +
                     '<a class="nl-field-toggle" ng-click="open($event)" ng-bind="viewValue()"></a>' +
                     '<ul>' +
                         '<li class="nl-ti-input">' +
@@ -19,7 +19,7 @@ angular.module('vr.directives.nlForm.text',[])
                         '</li>' +
                         '<li class="nl-ti-example" ng-show="showSubline()" ng-bind-html-unsafe="subline"></li>' +
                     '</ul>' +
-                '</div>',
+                '</span>',
             controller: 'nlTextCtrl',
             link: function(scope, element, attributes){
 
