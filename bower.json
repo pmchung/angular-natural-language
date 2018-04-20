@@ -1,6 +1,6 @@
 {
     "name": "angular-natural-language",
-    "version": "0.1.10",
+    "version": "0.1.11",
     "main": "./build/angular-natural-language.min.js",
     "ignore": [
         "**/.*",
