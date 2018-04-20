@@ -19,7 +19,7 @@ angular.module('vr.directives.nlForm.select',[])
 							"<div class='nl-dd-image' ng-if='label.image'><img ng-src='{{label.image}}' /></div>" +
 							"<div class='nl-dd-label' ng-bind='label.label' />" +
 						"</li>" +
-						"<li ng-show='allowOther'>" +
+						"<li class='nl-field-other' ng-show='allowOther'>" +
 							"<input type='text' placeholder='Specify other' ng-model='otherValue' ng-change='selectOther(otherValue)' />" +
 						"</li>" +
 					"</ul>" +
