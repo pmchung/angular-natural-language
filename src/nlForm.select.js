@@ -16,7 +16,7 @@ angular.module('vr.directives.nlForm.select',[])
 					"<ul>" +
                         "<li ng-show='allOptions && multiple && !isAllSelected()' ng-bind='allOptions' ng-click='selectAll()'></li>" +
 						"<li ng-repeat='label in getLabels()' ng-class=\"{'nl-dd-checked': isSelected(label.label)}\" ng-click='select(label.label)'>" +
-							"<div class='nl-dd-image' ng-if='label.image'><img ng-src='{{label.image}}' /></div>" +
+							"<img ng-src='{{label.image}}' class='nl-dd-image' ng-if='label.image'/>" +
 							"<div class='nl-dd-label' ng-bind='label.label' />" +
 						"</li>" +
 						"<li class='nl-field-other' ng-show='allowOther'>" +
