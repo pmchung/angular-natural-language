@@ -23,9 +23,9 @@ angular.module('vr.directives.nlForm.select',[])
 					"</a>" +
 					"<ul>" +
                         "<li ng-show='allOptions && multiple && !isAllSelected()' ng-bind='allOptions' ng-click='selectAll()'></li>" +
-						"<li ng-repeat='label in getLabels()' ng-class=\"{'nl-dd-checked': isSelected(label)}\" ng-click='select(label)'>" +
-							"<img ng-show='image' ng-src='label' />" +
-							"<span ng-if='!image' ng-bind='label' />" +
+						"<li ng-repeat='label in getLabels()' ng-class=\"{'nl-dd-checked': isSelected(label.label)}\" ng-click='select(label.label)'>" +
+							"<div class='nl-dd-image' ng-if='label.image'><img ng-src='label.image' /></div>" +
+							"<div class='nl-dd-label' ng-bind='label.label' />" +
 						"</li>" +
 						"<li ng-show='allowOther'>" +
 							"<input type='text' placeholder='Specify other' ng-model='otherValue' ng-change='selectOther(otherValue)' />" +
@@ -36,9 +36,6 @@ angular.module('vr.directives.nlForm.select',[])
 
 				// allow text input as "other"
 				scope.allowOther = !angular.isUndefined(attributes.allowOther);
-
-				// use label as file url to show image in selection
-				scope.image = !angular.isUndefined(attributes.image);
 
 				// is this required
 				scope.required = !angular.isUndefined(attributes.required);
@@ -373,7 +370,7 @@ angular.module('vr.directives.nlForm.select',[])
 				case ARRAY_OF_OBJECTS:
 					// map the array to pull out the label
 					return $scope.options.map(function(opt) {
-						return opt.label;
+						return opt;
 					});
 				case OBJECT_OF_VALUES:
 				case OBJECT_OF_OBJECTS:
