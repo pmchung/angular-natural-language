@@ -21,7 +21,7 @@ angular.module('vr.directives.nlForm.select',[])
 							"<div class='nl-dd-label' ng-bind='label.label' />" +
 							"<div class='nl-dd-checkbox' ng-if='multiple'>" +
 								"<span class='check-box'>" +
-									"<input type='checkbox' ng-model='isSelected(label.label)' />" +
+									"<input type='checkbox' ng-checked='isSelected(label.label)' />" +
 									"<span class='checkmark'></span>" +
   								"</span >" +
 							"</div>" +
